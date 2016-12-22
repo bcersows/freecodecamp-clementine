@@ -1,7 +1,8 @@
 'use strict';
 
 var path = process.cwd();
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var ClickHandler = require(path + '/app/controllers_backend/clickHandler.server.js');
+var PollsHandler = require(path + '/app/controllers_backend/pollsHandler.server.js');
 
 module.exports = function (app, passport) {
 
@@ -14,9 +15,10 @@ module.exports = function (app, passport) {
 	}
 
 	var clickHandler = new ClickHandler();
+	var pollsHandler = new PollsHandler();
 
 	app.route('/')
-		.get(isLoggedIn, function (req, res) {
+		.get(function (req, res) {
 			res.sendFile(path + '/public/index.html');
 		});
 
@@ -35,10 +37,18 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/profile.html');
 		});
-
+	
+	app.route('/api/polls')
+		.get(pollsHandler.get)
+		.post(isLoggedIn, pollsHandler.add);
+		
 	app.route('/api/:id')
-		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.github);
+		.get(function (req, res) {
+			if ( req.isAuthenticated() ) {
+				res.json(req.user.github);
+			} else {
+				res.json({err: "Not authenticated."});
+			}
 		});
 
 	app.route('/auth/github')
@@ -49,7 +59,7 @@ module.exports = function (app, passport) {
 			successRedirect: '/',
 			failureRedirect: '/login'
 		}));
-
+	
 	app.route('/api/:id/clicks')
 		.get(isLoggedIn, clickHandler.getClicks)
 		.post(isLoggedIn, clickHandler.addClick)

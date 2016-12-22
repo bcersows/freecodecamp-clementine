@@ -202,3 +202,32 @@ span {
 	display: inline;
 	margin: 0;
 }
+
+
+h1, h2, h3, h4, h5, h6 {
+	color: #bc3435;
+}
+
+#pollsList {
+	border-radius: 5px;
+	margin: 0;
+	padding: 0;
+}
+#pollsList .poll {
+	background-color: #bc3435;
+	border-radius: 5px;
+	color: white;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+#pollsList .poll .poll-name {
+	font-weight: bold;
+}
+
+/* start */
+.authenticated {
+	display: none;
+}
+#polls-create {
+	display: none;
+}
