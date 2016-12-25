@@ -3,10 +3,10 @@ html
   head
     title Poll #{poll.name} | FreeCodeCamp Voting App
     
-    <meta property="og:url"                content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
+    meta(property="og:url" content=url+"polls/"+poll._id)
     <meta property="og:type"               content="article" />
-    <meta property="og:title"              content="When Great Minds Don’t Think Alike" />
-    <meta property="og:description"        content="How much does culture influence creative thinking?" />
+    meta(property="og:title" content="FreeCodeCamp Voting App poll: '"+poll.name+"'")
+    <meta property="og:description" content="A poll from bcersows' FCC Voting App." />
     
     include includes/includes.pug
     script.

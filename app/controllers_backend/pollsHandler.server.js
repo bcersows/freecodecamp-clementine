@@ -57,7 +57,7 @@ function PollsHandler () {
 			.exec(function (err, poll) {
 				if (err) { throw err; }
 				console.log(poll[0]);
-				res.render('poll', {poll: poll[0]});
+				res.render('poll', {poll: poll[0], url: process.env.APP_URL});
 			});
 	}
 	
