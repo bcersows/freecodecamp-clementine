@@ -9,10 +9,19 @@ function PollsHandler () {
 			.find({})
 			.exec(function (err, result) {
 				if (err) { throw err; }
-
 				res.json(result);
 			});
 	};
+	
+	this.getFromUser = function(username, callback) {
+		Polls
+			.find({"creator": ""+username})
+			.exec(function (err, result) {
+				if (err) { throw err; }
+
+				callback(result);
+			});
+	}
 
 	this.add = function (req, res) {
 		console.log(req.body);

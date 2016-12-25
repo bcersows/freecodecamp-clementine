@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title My Polls | FreeCodeCamp Voting App
+    <link href="/public/css/main.css" rel="stylesheet" type="text/css">
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  body
+    .container
+      .row
+        .col-xs-12
+          h1 My Polls
+          #pollsList
+            each poll in polls.length ? polls : ['There are no polls yet.']
+              .poll
+                .poll-name= poll.name
+                .pull-right
+                  button.btn.btn-danger Delete
+                  button.btn.btn-info Share

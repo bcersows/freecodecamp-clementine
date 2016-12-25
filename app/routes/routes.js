@@ -37,6 +37,15 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/profile.html');
 		});
+		
+	app.route('/mypolls')
+		.get(isLoggedIn, function (req, res) {
+			var user = req.user.github.username;
+			pollsHandler.getFromUser(user, function(result) {
+				console.log(result);
+				res.render('mypolls', {polls: result});
+			});
+		});
 	
 	app.route('/api/polls')
 		.get(pollsHandler.get)
