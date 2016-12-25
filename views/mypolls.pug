@@ -6,16 +6,25 @@ html
     script.
       var share = function(id) {
         window.open("http://www.facebook.com/sharer/sharer.php?u="+window.location.hostname+"/polls/" + id);
-      }
+      };
+      var deletePoll = function(id) {
+        myPollsController.delete(id, function(data) {
+            if (data.ok) {
+                $('.poll[data-id="'+id+'"]').remove();
+            }
+        });
+      };
   body
     .container
       .row
         .col-xs-12
           h1 My Polls
-          #pollsList
+          .polls-list
             each poll in polls.length ? polls : ['There are no polls yet.']
-              .poll
+              .poll(data-id=poll._id)
                 .poll-name= poll.name
                 .pull-right
-                  button.btn.btn-danger Delete
+                  button.btn.btn-danger(onClick="deletePoll('" + poll._id + "')") Delete
                   button.btn.btn-info(onClick="share('" + poll._id + "')") Share
+    <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="controllers/pollsController.client.js"></script>

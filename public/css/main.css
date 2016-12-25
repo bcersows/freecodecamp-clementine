@@ -208,12 +208,12 @@ h1, h2, h3, h4, h5, h6 {
 	color: #bc3435;
 }
 
-#pollsList {
+.polls-list {
 	border-radius: 5px;
 	margin: 0;
 	padding: 0;
 }
-#pollsList .poll {
+.polls-list .poll {
 	background-color: #bc3435;
 	border-radius: 5px;
 	color: white;
@@ -221,7 +221,7 @@ h1, h2, h3, h4, h5, h6 {
 	overflow: hidden;
 	padding: 5px;
 }
-#pollsList .poll .poll-name {
+.polls-list .poll .poll-name {
 	float: left;
 	font-weight: bold;
 }

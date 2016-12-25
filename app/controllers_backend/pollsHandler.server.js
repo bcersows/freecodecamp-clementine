@@ -3,7 +3,7 @@
 var Polls = require('../models/polls.js');
 
 function PollsHandler () {
-
+	
 	this.get = function (req, res) {
 		Polls
 			.find({})
@@ -24,8 +24,6 @@ function PollsHandler () {
 	}
 
 	this.add = function (req, res) {
-		console.log(req.body);
-		//console.log(req.user.github);
 		var poll = new Polls({
 			name: req.body.name,
 			creator: req.user.github.username,
@@ -38,6 +36,18 @@ function PollsHandler () {
 			if (err) throw err;
 			res.json({msg: "success", data: data});
 		});
+	};
+
+	this.remove = function (req, res) {
+		var id = req.body.id;
+		var user = req.user.github.username;
+		Polls
+			.find({"_id": id, "creator":user})
+			.remove()
+			.exec(function (err, result) {
+				if (err) { throw err; }
+				res.json(result);
+			});
 	};
 }
 
