@@ -2,8 +2,11 @@ doctype html
 html
   head
     title My Polls | FreeCodeCamp Voting App
-    <link href="/public/css/main.css" rel="stylesheet" type="text/css">
-    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    include includes/includes.pug
+    script.
+      var share = function(id) {
+        window.open("http://www.facebook.com/sharer/sharer.php?u="+window.location.hostname+"/polls/" + id);
+      }
   body
     .container
       .row
@@ -15,4 +18,4 @@ html
                 .poll-name= poll.name
                 .pull-right
                   button.btn.btn-danger Delete
-                  button.btn.btn-info Share
+                  button.btn.btn-info(onClick="share('" + poll._id + "')") Share
