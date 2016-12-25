@@ -20,11 +20,14 @@ html
         .col-xs-12
           a(href="/") Go back
           h1 My Polls
+          .text-info Your polls achieved a total of #{votes} votes.
           .polls-list
             each poll in polls.length ? polls : ['There are no polls yet.']
               .poll(data-id=poll._id)
                 .poll-name= poll.name
+                  span.poll-votes-amount  (#{poll.total} votes)
                 .pull-right
+                  a.btn.btn-info(href='/polls/'+poll._id) Open
                   button.btn.btn-danger(onClick="deletePoll('" + poll._id + "')") Delete
                   button.btn.btn-info(onClick="share('" + poll._id + "')") Share
     <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>

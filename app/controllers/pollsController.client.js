@@ -79,7 +79,9 @@ var myPollsController;
             };
             
             $('.polls-create-option').each(function(ind, el) {
-               data.options.push($(el).val());
+               var val = $(el).val();
+               if ( val==="" ) { next; }
+               data.options.push(val);
             });
             
             $.post(apiUrl, data, function(result) {
@@ -96,7 +98,7 @@ var myPollsController;
             var choice = $('.poll-vote input:radio:checked').val();
             
             $.post(apiVoteUrl, {pollId: pollId, optionId: choice}, function(result) {
-               console.log(result);
+               window.location.reload();
             });
          });
       };

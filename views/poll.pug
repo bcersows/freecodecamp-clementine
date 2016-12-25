@@ -41,9 +41,31 @@ html
                   button.btn.btn-success Vote
               .col-xs-12.col-lg-6
                 h2 Other's votes
-                  each pollIt in poll.options ? poll.options : ['There are no options yet.']
-                    p=pollIt.name
-                      span=pollIt.votes
+                  #chart
+                  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                  script.
+                    var pollOptions = [];
+                  each pollIt in poll.options ? poll.options : []
+                    script.
+                      pollOptions.push(['#{pollIt.name}',#{pollIt.votes}]);
+                  script.
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+                    function drawChart() {
+                      var data = new google.visualization.DataTable();
+                      data.addColumn('string', 'Option');
+                      data.addColumn('number', 'Votes');
+                      data.addRows(pollOptions);
+              
+                      // Set chart options
+                      var options = {'title':'Results for the poll "#{poll.name}"',
+                                     //'width':400,
+                                     'height':300};
+              
+                      // Instantiate and draw our chart, passing in some options.
+                      var chart = new google.visualization.PieChart(document.getElementById('chart'));
+                      chart.draw(data, options);
+                    }
             
     <script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/controllers/pollsController.client.js"></script>

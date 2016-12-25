@@ -42,7 +42,16 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, function (req, res) {
 			var user = req.user.github.username;
 			pollsHandler.getFromUser(user, function(result) {
-				res.render('mypolls', {polls: result});
+				var total = 0;
+				result.forEach(function(poll) {
+					var cnt = 0;
+					poll.options.forEach(function(option) {
+						cnt += option.votes;
+					});
+					poll.total = cnt;
+					total += cnt;
+				});
+				res.render('mypolls', {polls: result, votes: total});
 			});
 		});
 		
