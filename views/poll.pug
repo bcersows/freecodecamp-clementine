@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    title Poll #{poll.name} | FreeCodeCamp Voting App
+    
+    <meta property="og:url"                content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="When Great Minds Don’t Think Alike" />
+    <meta property="og:description"        content="How much does culture influence creative thinking?" />
+    
+    include includes/includes.pug
+    script.
+      var share = function(id) {
+        window.open("http://www.facebook.com/sharer/sharer.php?u="+window.location.hostname+"/polls/" + id);
+      };
+      var deletePoll = function(id) {
+        myPollsController.delete(id, function(data) {
+            if (data.ok) {
+                $('.poll[data-id="'+id+'"]').remove();
+            }
+        });
+      };
+  body
+    .container
+      .row
+        .col-xs-12
+          a(href="/") Go back
+          h1 Poll '#{poll.name}'
+          .poll-id.text-muted(data-poll-id=poll._id) Id: #{poll._id}.
+          .container
+            .row
+              .col-xs-12.col-lg-6
+                h2 Vote for a choice:
+                form#poll-options.form.poll-vote
+                  each pollIt in poll.options ? poll.options : ['There are no options yet.']
+                    .form-group
+                      .poll-option
+                        label
+                          input(type="radio" name="option" required="required" value=pollIt._id)
+                          span &nbsp; #{pollIt.name}
+                  button.btn.btn-success Vote
+              .col-xs-12.col-lg-6
+                h2 Other's votes
+                  each pollIt in poll.options ? poll.options : ['There are no options yet.']
+                    p=pollIt.name
+                      span=pollIt.votes
+            
+    <script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/controllers/pollsController.client.js"></script>

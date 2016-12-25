@@ -221,9 +221,37 @@ h1, h2, h3, h4, h5, h6 {
 	overflow: hidden;
 	padding: 5px;
 }
+.polls-list .poll a {
+	color: inherit;
+}
 .polls-list .poll .poll-name {
 	float: left;
 	font-weight: bold;
+}
+
+.polls-options {
+	position: relative;
+}
+.polls-options #polls-options-more {
+	bottom: 5px;
+	padding: 0 5px;
+	position: absolute;
+	right: 5px;
+	width: auto;
+}
+.form-control.polls-create-option {
+	margin-right: 5px;
+}
+
+.poll-option {
+	background-color: lightblue;
+	cursor: pointer;
+	display: inline-block;
+	min-width: 200px;
+	padding: 5px;
+}
+.poll-option:hover {
+	background-color: rgb(153, 206, 210);
 }
 
 /* start */

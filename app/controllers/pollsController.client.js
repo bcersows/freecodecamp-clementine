@@ -8,6 +8,11 @@ var myPollsController;
       var $pollsArea = $('#polls-list');
       const pollsAmount = ".polls-amount";
       var apiUrl = appUrl + '/api/polls';
+      var apiVoteUrl = apiUrl + '/options';
+      
+      this.addPollOption = function() {
+         $('#polls-create .polls-options').append(designPollOption());
+      }
       
       this.delete = function(id, callback) {
          var data = {
@@ -21,7 +26,21 @@ var myPollsController;
             }
          });
       }
-   
+      
+      var designPoll = function(poll) {
+         var html = '<div class="poll"><span class="poll-name"><a ' +
+           'href="'+appUrl+'/polls/'+poll._id+'">' + poll.name + '</a></span>';
+         if ( poll.options && poll.options.length ) {
+            html += '<span class="pull-right" style="color: lightgrey;">'+
+              poll.options.length+' options</span>';
+         }
+         html += '</div>';
+         return html;
+      }
+      var designPollOption = function() {
+         return '<label>Option: <input class="form-control polls-create-option" name="option" type="text" placeholder="How is the option called?" /></label>';
+      }
+      
       var updateClickCount = function (data) {
          var clicksObject = JSON.parse(data);
          //clickNbr.innerHTML = clicksObject.clicks;
@@ -30,7 +49,7 @@ var myPollsController;
       var renderList = function (polls) {
          $pollsArea.empty();
          $.each(polls, function(index, poll) {
-            $pollsArea.append('<div class="poll"><span class="poll-name">' + poll.name + '</span></div>');
+            $pollsArea.append(designPoll(poll));
          });
          $(pollsAmount).text(polls.length || 0);
       }
@@ -42,7 +61,13 @@ var myPollsController;
          
          $('.btn-polls-add').click(function() {
             $(this).hide();
+            myPollsController.addPollOption();
             $('#polls-create').show();
+         });
+         
+         $('.polls-options-more').click(function(evt) {
+            evt.preventDefault();
+            myPollsController.addPollOption();
          });
          
          $('#polls-create').submit(function(evt) {
@@ -57,9 +82,21 @@ var myPollsController;
                data.options.push($(el).val());
             });
             
-            $.post(apiUrl, data, function(data) {
-               $('#polls-create').hide();
+            $.post(apiUrl, data, function(result) {
+               $('#polls-create').hide().find('.polls-create-option').remove();
                $('.btn-polls-add').show();
+               $('.polls-list').prepend(designPoll(data));
+            });
+         });
+         
+         $('.poll-vote').submit(function(evt) {
+            evt.preventDefault();
+            
+            var pollId = $('.poll-id').attr('data-poll-id');
+            var choice = $('.poll-vote input:radio:checked').val();
+            
+            $.post(apiVoteUrl, {pollId: pollId, optionId: choice}, function(result) {
+               console.log(result);
             });
          });
       };

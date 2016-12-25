@@ -45,11 +45,17 @@ module.exports = function (app, passport) {
 				res.render('mypolls', {polls: result});
 			});
 		});
+		
+	app.route('/polls/:id')
+		.get(pollsHandler.single);
 	
 	app.route('/api/polls')
 		.get(pollsHandler.get)
 		.post(isLoggedIn, pollsHandler.add)
 		.delete(isLoggedIn, pollsHandler.remove);
+		
+	app.route('/api/polls/options')
+		.post(pollsHandler.voteForOption);
 		
 	app.route('/api/:id')
 		.get(function (req, res) {

@@ -38,11 +38,14 @@
 					<h2>Polls</h2>
 					<div class="authenticated">
 						<button class="btn btn-success btn-polls-add">Create poll</button>
-						<form id="polls-create" class="form">
-							<label>Enter the poll name: <input class="form-control" name="name" id="polls-create-name" type="text" placeholder="Enter its name!" required="required" /></label>
-							<label>Option name: <input class="form-control polls-create-option" name="option" type="text" placeholder="How is the option called?" /></label>
-							<label>Option name: <input class="form-control polls-create-option" name="option2" type="text" placeholder="How is the option called?" /></label>
-							<button class="btn btn-success btn-block" type="submit">Create!</button>
+						<form id="polls-create" class="form form-inline">
+							<div class="form-group">
+								<label>Enter the poll name: <input class="form-control" name="name" id="polls-create-name" type="text" placeholder="Enter its name!" required="required" /></label>
+							</div>
+							<div class="polls-options">
+								<button id="polls-options-more" class="polls-options-more btn btn-success" title="Create another option.">+</button>
+							</div>
+							<button class="btn btn-success" type="submit">Create!</button>
 						</form>
 					</div>
 					<div id="polls">
